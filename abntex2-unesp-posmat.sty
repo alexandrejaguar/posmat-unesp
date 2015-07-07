@@ -33,7 +33,7 @@
 \usepackage[utf8]{inputenc}		% Codificação do documento (conversão automática dos acentos)
 \usepackage{lastpage}			% Usado pela Ficha catalográfica
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
-\usepackage{color}				% Controle das cores
+\usepackage[usenames,dvipsnames]{color}	% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 %\usepackage{titlesec}			% Modificação necessária nos títulos - conflito
 \usepackage{tikz}				% construção do capítulo
@@ -44,8 +44,9 @@
 \usepackage{caption}			% para inserir subcaptions
 \usepackage{subfig}				% para subfigures
 \usepackage{verbatim}
+\usepackage{minted}				% para código diretamente no texto
 \usepackage[brazilian,hyperpageref]{backref} % páginas com as citações na bibliografia
-\usepackage[linesnumbered,ruled,vlined]{algorithm2e} %% colocando algoritmos
+\usepackage[portuguese,linesnumbered,ruled,vlined]{algorithm2e} %% colocando algoritmos
 
 
 % 
@@ -71,12 +72,35 @@
 % SEÇÕES EM MAIÚSCULAS
 %
 
-\addto\captionsbrazil{\renewcommand{\contentsname}{SUMÁRIO}}
-\addto\captionsbrazil{\renewcommand{\listfigurename}{LISTA DE FIGURAS}}
-\addto\captionsbrazil{\renewcommand{\listtablename}{LISTA DE TABELAS}}
-\addto\captionsbrazil{\renewcommand{\bibname}{REFERÊNCIAS}}
-\addto\captionsbrazil{\renewcommand{\chaptername}{CAPÍTULO}}
-\addto\captionsbrazil{\renewcommand{\appendixname}{APÊNDICE}}
+% --------------------------------------------------------------------------
+% MUDANDO IDIOMA PADRÃO
+% --------------------------------------------------------------------------
+
+\addto\captionsbrazil{
+  \renewcommand{\chaptername}{CAPÍTULO}
+  \renewcommand{\bibname}{REFERÊNCIAS}
+  \renewcommand{\contentsname}{SUMÁRIO}
+  \renewcommand{\folhaderostoname}{PÁGINA DE TÍTULO}
+  \renewcommand{\epigraphname}{EPÍGRAFE}
+  \renewcommand{\dedicatorianame}{DEDICATÓRIA}
+  \renewcommand{\errataname}{ERRATA}
+  \renewcommand{\agradecimentosname}{AGRADECIMENTOS}
+  \renewcommand{\anexoname}{ANEXO}
+  \renewcommand{\anexosname}{ANEXOS}
+  \renewcommand{\appendixname}{APÊNDICE}
+  \renewcommand{\apendicesname}{APÊNDICES}
+  \renewcommand{\orientadorname}{ORIENTADOR:}
+  \renewcommand{\coorientadorname}{COORIENTADOR:}
+  \renewcommand{\folhadeaprovacaoname}{FOLHA DE APROVAÇÃO}
+  \renewcommand{\resumoname}{RESUMO}
+  \renewcommand{\listfigurename}{LISTA DE FIGURAS}
+  \renewcommand{\listtablename}{LISTA DE TABELAS}
+  \renewcommand{\listadesiglasname}{LISTA DE ABREVIATURAS E SIGLAS}
+  \renewcommand{\listadesimbolosname}{LISTA DE SÍMBOLOS}
+  \renewcommand{\fontename}{FONTE}
+  \renewcommand{\notaname}{NOTA}
+}
+
 %% título da folha antes dos apêndices
 \addto\captionsbrazil{\renewcommand{\apendicesname}{\HUGE{APÊNDICES}}}
 
@@ -94,6 +118,33 @@
 		{\textwidth}
 		{\normalrulethickness}
 
+
+%
+% CAPA
+%
+
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+    \ABNTEXchapterfont\Large{UNIVERSIDADE ESTADUAL PAULISTA -- UNESP \\ 
+		Programa de Pós-Graduação em Ciência e Tecnologia de Materiais 
+		-- POSMAT}
+    
+    \vspace*{2cm}
+    
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{5cm}
+    \ABNTEXchapterfont\bfseries\LARGE\imprimirtitulo
+    \vfill
+    
+    \large\imprimirlocal
+
+    \large\imprimirdata
+    
+    \vspace*{1cm}
+  \end{capa}
+}
 
 % 
 % CONFIGURAÇÕES DO PACOTE BACKREF
@@ -115,10 +166,11 @@
 
 
 %
-% ESTILO DAS FIGURAS
+% ESTILO DOS CAPTIONS DE FIGURAS E TABELAS
 %
 
 \captionsetup[figure]{labelfont={bf,footnotesize},textfont={footnotesize}}
+\captionsetup[table]{labelfont={bf,footnotesize},textfont={footnotesize}}
 \captionsetup[subfloat]{labelfont={bf,footnotesize},textfont={footnotesize},subrefformat=parens} %<-----designing subcaption
 
 
@@ -163,6 +215,25 @@
   \renewcommand*{\chaptitlefont}{\normalfont\normalfont\Large\bfseries}
   \renewcommand*{\printchaptertitle}[1]{\flushright\chaptitlefont##1}
 }
+
+
+%
+% ALTERAÇÕES NO PACOTE ALGORITHM2E
+%
+
+\SetKwFor{Para}{para}{fa\c{c}a}{fim}
+\SetKw{Return}{retorne}
+\SetKwInput{KwIn}{Entrada}
+\SetKwInput{KwOut}{Saída}
+
+%
+% DEFININDO CAPTION 'FANTASMA'
+%
+
+\makeatletter
+\providecommand\phantomcaption{\caption@refstepcounter\@captype}
+\makeatother
+
 
 %
 % FIM DAS CUSTOMIZACOES PARA O POSMAT - Unesp
